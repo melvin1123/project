@@ -1,0 +1,157 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+#include<time.h>
+
+
+typedef struct GradingSystem{
+    char name[50];
+    int gr1;
+    int gr2;
+    int gr3;
+    int gr4;
+}GS;
+
+int record(int n1,int n2,int n3,int n4);
+
+int main(){
+
+int oi;
+int choice;
+int a,b,c,d,e,b1,c1,d1,e1,r;
+char line[100];
+
+GS student[50];
+  FILE* rec;
+  
+m:
+oi -= 1;
+clrscr();
+
+
+
+  
+
+  rec = fopen("SRecord.csv","a");
+  fprintf(rec,"Name, Grade\n");
+  
+  printf("[1]Record student scores\n[2]See record list\n[3]Delete record");
+  printf("\nEnter choice: ");
+  scanf("%d",&choice);
+  
+  
+  
+  switch(choice){
+  case 1:
+  printf("===================================================\n\n              Default Grading System\n\n");                                                            
+  printf("===================================================");
+  printf("\n\nNumber of students: ");
+  scanf("%d",&a);
+  printf("\n===================================================");
+  printf("\n\nMax quiz Score: ");
+  scanf("%d",&b);
+  printf("Max oral score: ");
+  scanf("%d",&c);
+  printf("Max project score: ");
+  scanf("%d",&d);
+  printf("Max exam score: ");
+  scanf("%d",&e);
+  printf("\n");
+  printf("===================================================");
+  printf("Enter score percentage(don't write the '%%' sign)");
+  printf("\n\nQuiz: ");
+  scanf("%d%%",&b1);
+  printf("Oral: ");
+  scanf("%d",&c1);
+  printf("Project: ");
+  scanf("%d",&d1);
+  printf("Exam: ");
+  scanf("%d",&e1);
+
+  
+  for(int i = 0;i< a;i++)
+  {
+      printf("\nEnter students name: ");
+      scanf("%s",&student[i].name);
+      fprintf(rec,"%s",student[i].name);
+      printf("Enter students quiz scores: ");
+      scanf("%d",&student[i].gr1);
+      printf("Enter students oral scores: ");
+      scanf("%d",&student[i].gr2);
+      printf("Enter students project score: ");
+      scanf("%d",&student[i].gr3);
+      printf("Enter students exam score: ");
+      scanf("%d",&student[i].gr4);
+    
+      float b2 = (student[i].gr1*b1)/b;
+      float c2 = (student[i].gr2*c1)/c; 
+      float d2 = (student[i].gr3*d1)/d;
+      float e2 = (student[i].gr4*e1)/e;
+      
+      int tg = record(b2,c2,d2,e2);
+      
+      
+      fprintf(rec,", %d\n",tg);
+    
+  } 
+fclose(rec);
+  printf("\nStudent Grade Recorded! \n\n");
+int ad;
+    printf("\n\n[enter any number to go back]\n");
+    scanf("%d",&ad);
+if(ad>=0){
+oi += 1;
+clrscr();
+    goto m;}
+    
+    
+  break;
+ 
+
+  case 2:
+
+    rec = fopen("SRecord.csv", "r");
+
+        fgets(line, 100, rec);
+        printf("%s");
+        if(rec == NULL){printf("No Records yet");}
+            
+
+    fclose(rec);
+    
+    int ag;
+    printf("\n\n[enter any number to go back]\n");
+    scanf("%d",&ag);
+    
+    if(ag>=0){
+       oi += 1;
+       goto m;}
+    
+    
+   break; 
+  
+
+    
+    case 3:
+    remove("SRecord.csv");  
+    if(choice == 3){
+    printf("Record deleted!\n");
+    oi +=1;
+    sleep(1);
+    clrscr();
+    goto m;
+    ;}
+    
+   
+    break;
+    
+}
+
+
+}
+
+int record(int n1,int n2,int n3,int n4){
+    int result;
+    result = n1+n2+n3+n4;
+    return result;
+  }
